@@ -4,6 +4,7 @@ import java.util.List;
 import org.hibernate.cfg.NotYetImplementedException;
 import org.hibernate.classic.Session;
 
+import com.arao.ecom.exception.BusinessLogicException;
 import com.arao.persistence.HibernateUtil;
 
 public class GenericRepository<T> implements IGenericRepository<T>,AutoCloseable {
@@ -35,7 +36,7 @@ public class GenericRepository<T> implements IGenericRepository<T>,AutoCloseable
 		throw new NotYetImplementedException("Not implemented");
 	}
 
-	public List<T> add(List<T> t) {
+	public List<T> add(List<T> t) throws BusinessLogicException {
 		// TODO Auto-generated method stub
 		throw new NotYetImplementedException("Not implemented");
 	}
