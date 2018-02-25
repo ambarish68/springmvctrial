@@ -11,6 +11,9 @@ public class UserValidator implements IValidator<User> {
 
 	private final Pattern EMAIL_REGEX= Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 	public void validate(User user) throws BusinessLogicException {
+		if(user.getEmailId() ==null || user.getEmailId().length()==0){
+			throw new BusinessLogicException("Invalid EmailId");
+		}
 		Matcher matcher = EMAIL_REGEX.matcher(user.getEmailId());
 		if(!matcher.find()){
 			throw new BusinessLogicException("Invalid EmailId");

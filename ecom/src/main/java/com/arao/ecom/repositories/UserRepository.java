@@ -16,10 +16,34 @@ public class UserRepository extends GenericRepository<User>{
 		for(int i=0;i<users.size();i++){
 			if(users.get(i).getId()==0){
 				userValidator.validate(users.get(i));
-				session.persist(users.get(i));
+				session.saveOrUpdate(users.get(i));
 			}
 		}
 		session.getTransaction().commit();
 		return users;
+	}
+	
+	@Override
+	public List<User> update(List<User> users) throws BusinessLogicException{
+		session.beginTransaction();
+		for(int i=0;i<users.size();i++){
+			if(users.get(i).getId()!=0){
+				userValidator.validate(users.get(i));
+				session.saveOrUpdate(users.get(i));
+			}
+		}
+		session.getTransaction().commit();
+		return users;
+	}
+	
+	@Override
+	public void delete(List<User> users) throws BusinessLogicException{
+		session.beginTransaction();
+		for(int i=0;i<users.size();i++){
+			if(users.get(i).getId()!=0){
+				session.delete(users.get(i));
+			}
+		}
+		session.getTransaction().commit();
 	}
 }

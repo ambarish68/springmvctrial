@@ -1,20 +1,15 @@
 package com.arao;
 
+import java.util.ArrayList;
 import org.hibernate.classic.Session;
-
 import com.arao.common.user.User;
+import com.arao.ecom.exception.BusinessLogicException;
+import com.arao.ecom.repositories.UserRepository;
 import com.arao.persistence.HibernateUtil;
-
-
-
 import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.AmazonSQSClientBuilder;
-/**
- * Hello world!
- *
- */
 public class App 
 {
 	public static void main( String[] args )
@@ -23,16 +18,6 @@ public class App
 		
         System.out.println("Maven + Hibernate + MySQL");
         Session session = HibernateUtil.getSessionFactory().openSession();
-
-//		AWSCredentials credentials = null;
-//		try {
-//			credentials = new ProfileCredentialsProvider("svc-ecom").getCredentials();
-//		} catch (Exception e) {
-//			throw new AmazonClientException("Cannot load the credentials from the credential profiles file. "
-//					+ "Please make sure that your credentials file is at the correct "
-//					+ "location (~/.aws/credentials), and is in valid format.", e);
-//		}
-
 		AmazonSQS sqs = AmazonSQSClientBuilder.standard().withCredentials(new ProfileCredentialsProvider("svc-ecom")).withRegion(Regions.US_EAST_2).build();
 		
 		System.out.println("Listing all queues in your account.\n");
@@ -49,5 +34,20 @@ public class App
         User user =  (User) session.get(User.class, 4);
         user.setPassword("passwork");
         session.getTransaction().commit();
+        
+        
+        UserRepository urep=new UserRepository();
+        User usr=new User();
+        usr.setEmailId("aaaba@gmail.com");
+        usr.setName("araoaraob");
+        usr.setPassword("araoabrao");
+        
+        ArrayList<User> uList=new ArrayList<User>();
+        uList.add(usr);
+        try {
+			urep.add(uList);
+		} catch (BusinessLogicException e) {
+			e.printStackTrace();
+		}
     }
 }

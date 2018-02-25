@@ -18,6 +18,7 @@ public class PaymentMethod {
 	public int getPaymentMethodId() {
 		return PaymentMethodId;
 	}
+	
 	public void setPaymentMethodId(int paymentMethodId) {
 		PaymentMethodId = paymentMethodId;
 	}
